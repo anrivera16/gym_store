@@ -1,0 +1,32 @@
+{% load static %}
+{% load i18n %}
+<div class="pg-card h-100">
+  <div class="pg-card-image">
+    <figure class="image pg-ratio-3x2">
+      <img class="img-fluid" src="{% if product.images %}{{ product.images.0 }}{% else %}{% static 'images/undraw/undraw_happy_birthday.svg' %}{% endif %}" alt="{{ product.name }}">
+    </figure>
+  </div>
+  <div class="pg-card-body mt-2" style="display: flex; flex-direction: column; justify-content: space-between;">
+    <div>
+      <h3 class="pg-title">{{ product.name }}</h3>
+      <p class="pg-subtitle">
+        {{ product.description }}
+      </p>
+    </div>
+    <div style="display: flex; justify-content: space-between; align-items: baseline;">
+      {% if product.default_price %}
+      <div class="mt-2">{{ product.default_price.human_readable_price }}</div>
+      <a href="{% url 'ecommerce:purchase_product' product.id %}" class="pg-button-secondary" style="white-space: nowrap;">
+        <span>Buy</span>
+        <span class="pg-icon">
+          <i class="fa fa-angle-double-right"></i>
+        </span>
+      </a>
+      {% else %}
+        <div class="mt-2">
+          {% translate "This product does not yet have a price and is so unavailable for purchase." %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>

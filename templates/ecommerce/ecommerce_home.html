@@ -1,0 +1,19 @@
+{% extends "web/app/app_base.html" %}
+{% load static %}
+{% load i18n %}
+{% block app %}
+<div class="app-card">
+  <a class="pg-link" href="{% url 'ecommerce:purchases' %}">{% translate "My Stuff" %}</a>
+  <h1 class="pg-title">{% translate "Store" %}</h1>
+  {% for product in products %}
+    {% if forloop.counter0|divisibleby:3 %}<div class="pg-columns mt-2">{% endif %}
+    <div class="pg-column-one-third">
+     {% include "ecommerce/components/product_card.html" %}
+    </div>
+    {% if forloop.counter|divisibleby:3 %}</div>{% endif %}
+  {% empty %}
+    {% include 'ecommerce/components/products_empty.html' %}
+  {% endfor %}
+  </div>
+</div>
+{% endblock %}

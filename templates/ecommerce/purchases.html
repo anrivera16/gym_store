@@ -1,0 +1,35 @@
+{% extends "web/app/app_base.html" %}
+{% load static %}
+{% load i18n %}
+{% block app %}
+<div class="app-card">
+  <a class="pg-link" href="{% url 'ecommerce:ecommerce_home' %}">{% translate "Store" %}</a>
+  <h1 class="pg-title">{% translate "My Stuff" %}</h1>
+  <div class="mt-2">
+  {% for purchase in purchases %}
+    {% if forloop.first %}
+    <table class="table pg-table">
+    <thead>
+    <tr>
+      <th>Product</th>
+      <th>Purchase Date</th>
+      <th>Price</th>
+    </tr>
+    </thead>
+      <tbody>
+    {% endif %}
+    <tr>
+      <td>{{ purchase.product.name }}</td>
+      <td>{{ purchase.created_at }}</td>
+      <td>{{ purchase.price.human_readable_price }}</td>
+    </tr>
+    {% if forloop.last %}
+      </tbody>
+    </table>
+    {% endif %}
+  {% empty %}
+    {% include 'ecommerce/components/purchases_empty.html' %}
+  {% endfor %}
+  </div>
+</div>
+{% endblock %}

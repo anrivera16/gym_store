@@ -1,0 +1,24 @@
+{% load i18n %}
+<div class="modal" tabindex="-1" id="delete-modal">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{% translate "Really delete team?" %}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% translate "Close" %}"></button>
+      </div>
+      <div class="modal-body">
+        {% blocktranslate with team_name=request.team.name %}
+        This will permanently delete the <em><strong>{{ team_name }}</strong></em> team and all associated data.
+        {% endblocktranslate %}
+        <strong>{% translate "This action cannot be undone." %}</strong>
+      </div>
+      <div class="modal-footer">
+        <form action="{% url 'single_team:delete_team' request.team.slug %} " method="post">
+        {% csrf_token %}
+          <button class="btn btn-danger" type="submit">{% translate "I understand, permanently delete this team" %}</button>
+        </form>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Cancel" %}</button>
+      </div>
+    </div>
+  </div>
+</div>

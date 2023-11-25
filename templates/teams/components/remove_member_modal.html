@@ -1,0 +1,33 @@
+{% load i18n %}
+<div class="modal" tabindex="-1" id="remove-modal">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{% if editing_self %}{% translate "Leave team?" %}{% else %}{% translate "Remove team member?" %}{% endif %}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% translate "Close" %}"></button>
+      </div>
+      <div class="modal-body">
+        {% if editing_self %}
+          {% blocktranslate with team_name=request.team.name %}
+          You will be removed from the team: <em><strong>{{ team_name }}</strong></em>.
+          After this, you will no longer be able to access any team pages, and will have to be invited again to regain access.
+          {% endblocktranslate %}
+        {% else %}
+          {% blocktranslate with team_name=request.team.name member_name=membership.user.get_display_name%}
+          This will remove <em><strong>{{ member_name }}</strong></em> from your team: <em>{{ team_name }}</em>.
+          They will no longer be able to access any team pages, and will have to be invited again to regain access.
+          {% endblocktranslate %}
+        {% endif %}
+      </div>
+      <div class="modal-footer">
+        <form action="{% url 'single_team:remove_team_membership' request.team.slug membership.pk %} " method="post">
+          {% csrf_token %}
+          <button class="btn btn-danger" type="submit">
+            {% if editing_self %}{% translate "I understand, leave team" %}{% else %}{% translate "I understand, remove team member" %}{% endif %}
+          </button>
+        </form>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Cancel" %}</button>
+      </div>
+    </div>
+  </div>
+</div>

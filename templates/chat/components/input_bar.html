@@ -1,0 +1,10 @@
+<form class="pg-chat-input-bar"
+      {% if chat %}
+      hx-post="{% url 'chat:new_chat_message' chat.id %}"
+      {% else %}
+      hx-post="{% url 'chat:start_chat' %}"
+      {% endif %}
+      hx-swap="outerHTML">
+  <input name="message" type="text" placeholder="Type your message..." aria-label="Message" class="pg-control">
+  <button type="submit" class="pg-button-primary mx-2">Send</button>
+</form>

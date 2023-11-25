@@ -1,0 +1,40 @@
+default_context:
+  _pegasus_version: 2023.11.1
+  author_name: 23andrew16
+  ci: github_actions
+  css_framework: bootstrap
+  css_theme: bootstrap-material
+  database: postgres
+  deploy_platform: heroku_docker
+  description: Test Store to Sell Gym Clothes
+  docker_setup: default
+  domain_name: localhost:8000
+  email: 23andrew16@gmail.com
+  enable_google_login: y
+  enable_twitter_login: y
+  front_end_framework: htmx
+  include_static_files: y
+  marketing_email_platform: none
+  post_process: y
+  project_name: Gym Store
+  project_slug: gym_store
+  stripe_payment_mode: checkout
+  subscription_billing_model: default
+  subscription_pricing_ui: in_app
+  use_2fa: y
+  use_admin_docs: y
+  use_api_keys: y
+  use_async_example: y
+  use_cloud_media_storage: y
+  use_debug_toolbar: n
+  use_docker: y
+  use_ecommerce_example: y
+  use_examples: y
+  use_impersonation: y
+  use_openai: y
+  use_sentry: n
+  use_subscriptions: y
+  use_teams: y
+  use_teams_example: y
+  use_translations: y
+  use_wagtail: y

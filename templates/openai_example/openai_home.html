@@ -1,0 +1,61 @@
+{% extends 'web/app/app_base.html' %}
+{% block app %}
+{% load static %}
+<div class="app-card">
+  <h1 class="pg-title">OpenAI Examples</h1>
+  <h2 class="pg-subtitle">Quickly integrate ChatGPT or Dall-E's image generation in your Django application.</h2>
+</div>
+<div class="pg-columns">
+  <div class="pg-column">
+    <div class="pg-card h-100">
+      <div class="pg-card-image">
+        <figure class="image pg-ratio-3x2">
+          <img class="img-fluid" src="{% static 'images/openai_example/chatgpt-logo.png' %}" alt="ChatGPT Logo">
+        </figure>
+      </div>
+      <div class="pg-card-body">
+        <div class="pg-content">
+          <h3>ChatGPT</h3>
+          <p>
+            Use <a href="https://openai.com/blog/chatgpt" target="_blank">ChatGPT</a> to automatically respond to user input or questions.
+          </p>
+        </div>
+        <div class="buttons">
+          <a href="{% url 'chat:chat_home' %}" class="pg-button-secondary">
+            <span>ChatGPT Demo</span>
+            <span class="pg-icon">
+              <i class="fa fa-angle-double-right"></i>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="pg-column">
+    <div class="pg-card h-100">
+      <div class="pg-card-image">
+        <figure class="image pg-ratio-3x2">
+          <img class="img-fluid" src="{% static 'images/openai_example/dalle-2-logo.png' %}" alt="DALL-E Logo">
+        </figure>
+      </div>
+      <div class="pg-card-body">
+        <div class="pg-content">
+          <h3>DALL-E 2</h3>
+          <p>
+            Generate a collection of images based on a text prompt, using
+            <a href="https://openai.com/product/dall-e-2" target="_blank">DALL-E 2</a>.
+          </p>
+        </div>
+        <div class="buttons">
+          <a href="{% url 'openai_example:image_demo' %}" class="pg-button-secondary">
+            <span>DALL-E 2 Demo</span>
+            <span class="pg-icon">
+              <i class="fa fa-angle-double-right"></i>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

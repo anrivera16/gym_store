@@ -1,0 +1,32 @@
+FROM python:3.11-bullseye
+ENV PYTHONUNBUFFERED=1
+
+# install node/npm
+RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | \
+    gpg --dearmor -o /usr/share/keyrings/nodesource.gpg
+
+RUN echo \
+  "deb [signed-by=/usr/share/keyrings/nodesource.gpg] https://deb.nodesource.com/node_18.x nodistro main" | \
+  tee /etc/apt/sources.list.d/nodesource.list && \
+    apt-get update && \
+    apt-get install nodejs -yqq
+
+# install gettext for translations
+RUN apt-get -yqq install gettext
+
+# create code directory
+RUN mkdir /code
+WORKDIR /code
+
+# install python requirements
+RUN pip install --upgrade pip
+
+# copy just requirements and install before rest of code to avoid having to
+# reinstall packages during build every time code changes
+COPY requirements.txt requirements.txt
+COPY dev-requirements.txt dev-requirements.txt
+COPY requirements requirements/
+RUN pip install -r dev-requirements.txt
+
+# copy code files
+COPY . /code/

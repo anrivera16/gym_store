@@ -1,0 +1,10 @@
+{% load i18n %}
+{% include "chat/components/message_list.html" %}
+{% include 'chat/components/input_bar.html' %}
+<script>
+document.body.addEventListener('htmx:afterOnLoad', function(evt) {
+  // scroll to bottom of chat after every htmx request
+  const chatUI = document.getElementById('message-list');
+  chatUI.scrollTop = chatUI.scrollHeight;
+});
+</script>

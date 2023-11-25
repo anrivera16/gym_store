@@ -1,0 +1,26 @@
+{% load i18n %}
+{% load team_tags %}
+{% if request.team %}
+  <li class="nav-item">
+    <a href="{% url 'teams_example:player_list' request.team.slug %}" class="nav-link {% if active_tab == 'teams_example' %}active{% endif %}">
+      <span class="pg-icon"><i class="fa fa-rocket"></i></span><span class="is-hidden-tablet-only">{% translate "Example App" %}</span>
+    </a>
+  </li>
+  {% if request.user|is_admin_of:request.team %}
+  <li class="nav-item">
+    <a href="{% url 'subscriptions_team:subscription_demo' request.team.slug %}" class="nav-link {% if active_tab == 'subscription_demo' %}active{% endif %}">
+      <span class="pg-icon"><i class="fa fa-desktop"></i></span><span class="is-hidden-tablet-only">{% translate "Subscription Demo" %}</span>
+    </a>
+  </li>
+  <li class="nav-item">
+    <a href="{% url 'subscriptions_team:subscription_details' request.team.slug %}" class="nav-link {% if active_tab == 'subscription' %}active{% endif %}">
+      <span class="pg-icon"><i class="fa fa-repeat"></i></span><span class="is-hidden-tablet-only">{% translate "Subscription" %}</span>
+    </a>
+  </li>
+  {% endif %}
+  <li class="nav-item">
+    <a href="{% url 'single_team:manage_team' request.team.slug %}" class="nav-link {% if active_tab == 'manage-team' %}active{% endif %}">
+      <span class="pg-icon"><i class="fa fa-gear"></i></span><span class="is-hidden-tablet-only">{% translate "My Team" %}</span>
+    </a>
+  </li>
+{% endif %}

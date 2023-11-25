@@ -1,0 +1,33 @@
+FROM python:3.11-bullseye
+ENV PYTHONUNBUFFERED=1
+
+# install node/npm
+RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | \
+    gpg --dearmor -o /usr/share/keyrings/nodesource.gpg
+
+RUN echo \
+  "deb [signed-by=/usr/share/keyrings/nodesource.gpg] https://deb.nodesource.com/node_18.x nodistro main" | \
+  tee /etc/apt/sources.list.d/nodesource.list && \
+    apt-get update && \
+    apt-get install nodejs -yqq
+
+RUN mkdir /code
+WORKDIR /code
+
+COPY requirements requirements/
+COPY requirements.txt requirements.txt
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
+COPY . /code/
+
+# build front end files
+RUN npm install
+RUN npm run build
+
+# why this has to be here:
+# https://stackoverflow.com/questions/59719175/where-to-run-collectstatic-when-deploying-django-app-to-heroku-using-docker
+RUN DEBUG=False python manage.py collectstatic --noinput --settings=gym_store.settings_production
+
+
+# Run gunicorn by default
+CMD exec gunicorn --bind 0.0.0.0:$PORT --workers 1 --threads 8 --timeout 0 gym_store.asgi:application -k uvicorn.workers.UvicornWorker
